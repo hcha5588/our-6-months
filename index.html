@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我哋一齊六個月啦! ❤️</title>
+    <style>
+        :root {
+            --bg-color: #fdfaf6;
+            --card-bg: #ffffff;
+            --primary-color: #e8a598;
+            --text-color: #5a4b41;
+            --accent-color: #df9c8c;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 漂浮愛心與羽毛特效 */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .heart, .feather {
+            position: absolute;
+            opacity: 0.6;
+            animation: float Up 6s ease-in infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% {
+                transform: translateY(-5vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 頂部吉祥物 Banner */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .mascots {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        .heart-icon {
+            color: #e25c5c;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 24px;
+            color: var(--text-color);
+            margin: 10px 0;
+            font-weight: 600;
+        }
+
+        .days-counter {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(232, 165, 152, 0.3);
+        }
+
+        /* 情書卡片 */
+        .letter-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(90, 75, 65, 0.05);
+            border: 1px solid rgba(223, 156, 140, 0.15);
+            margin-bottom: 40px;
+            white-space: pre-wrap; /* 保留分行 */
+            font-size: 15.5px;
+        }
+
+        .letter-card p {
+            margin-top: 0;
+            margin-bottom: 24px;
+        }
+
+        .signature {
+            text-align: right;
+            margin-top: 40px;
+            font-weight: bold;
+            border-top: 1px dashed rgba(223, 156, 140, 0.3);
+            padding-top: 20px;
+        }
+
+        /* 相簿區域 */
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 25px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .polaroid-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 12px 12px 24px 12px;
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            transform: rotate(-2deg);
+            transition: transform 0.3s ease;
+        }
+
+        .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+        }
+
+        .polaroid:hover {
+            transform: rotate(0deg) scale(1.05);
+            z-index: 2;
+        }
+
+        .polaroid img {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 4px;
+            background-color: #f0f0f0; /* 未載入時的灰色底 */
+        }
+
+        .caption {
+            text-align: center;
+            font-size: 13px;
+            margin-top: 10px;
+            font-weight: 500;
+            color: #7a6a5e;
+        }
+
+        /* 手機版排版調整 */
+        @media (max-width: 480px) {
+            .polaroid-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="floating-elements" id="floatContainer"></div>
+
+    <div class="container">
+        <!-- 頂部區 -->
+        <div class="header">
+            <div class="mascots">
+                <span>🐶</span>
+                <span class="heart-icon">❤️</span>
+                <span>🐦</span>
+            </div>
+            <h1>汪汪 & 鵪鶉</h1>
+            <div class="days-counter">✨ 我們的 180 日紀念 ✨</div>
+        </div>
+
+        <!-- 你的信件 -->
+        <div class="letter-card">
+我哋一齊六個月啦! 汪汪同鵪鶉嘅愛喺呢啲日子,里程碑好值得回顧,我鍾意將多啲感受講出嚟 
+
+呢段時間經歷咗幾次你嬲豬唔開心 我地跟住又努力修補 又整喊你3次  
+但開心嘅回憶仲好多 每次開相簿見你同我去嘅地方就好開心
+
+去到呢一刻 我仲係覺得同你一齊好甜蜜 好鍾意你 唔知你係咪都係咁諗呢唔知你咁感唔感受到我足夠嘅愛呢
+希望經歷呢段時間你覺得我呢個bf 信得過 可以講多啲心底話 對我冇咁多懷疑
+
+多謝你忍讓我嘅唔安全感,煩,重複嘅問題,悶,直男 我闖禍嗰時原諒我 俾機會聽我講 成日負責搵好地方同我去 關心我嘅日常(又成日服侍我hehe)
+呢段時間我有俾心機維護我哋之間嘅關係㗎 例如比平時諗多啲你需要嘅嘢 代入你嘅角色 製造小驚喜 想你感受到 
+
+希望我哋繼續甜甜蜜蜜寶貝 磨合多啲 挑戰黎嗰陣迎接佢 喺挑戰中成長 搵到舒服嘅相處模式 繼續表達自己感受 有咩唔舒服嘅地方話俾我聽 有嘢屈住屈住好辛苦 我想早啲聽你講 一齊分擔感受 就算即時搵唔到解決方法都好 因為屈住屈住好容易引爆情緒炸彈 對關係長期落去唔健康
+愛情係一個好大嘅課題 我唔係一個專家 但我願意繼續留喺你身邊 將自己打造 用你想要愛嘅方式愛你
+
+我知我講咗好耐! 但會多啲計劃拍拖行程! &gt;&lt;
+
+            <div class="signature">
+                把所有溫柔留給你嘅<br>
+                汪汪 🐶 上<br>
+                14/7/2026
+            </div>
+        </div>
+
+        <!-- 拍立得相簿 -->
+        <div class="gallery-title">📸 我們的回憶角落 (可自行放入相片)</div>
+        <div class="polaroid-grid">
+            
+            <!-- 拍立得相片 1 -->
+            <div class="polaroid">
+                <!-- 請將下面 "" 內替換成你的真實照片網址 -->
+                <img src="https://images.unsplash.com/photo-1516624683217-bf02fc6b6b7c?auto=format&fit=crop&w=500&q=80" alt="Memory 1">
+                <div class="caption">第一個里程碑 📍</div>
+            </div>
+
+            <!-- 拍立得相片 2 -->
+            <div class="polaroid">
+                <!-- 請將下面 "" 內替換成你的真實照片網址 -->
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=500&q=80" alt="Memory 2">
+                <div class="caption">最愛的咖啡店 ☕</div>
+            </div>
+
+            <!-- 拍立得相片 3 -->
+            <div class="polaroid">
+                <!-- 請將下面 "" 內替換成你的真實照片網址 -->
+                <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=500&q=80" alt="Memory 3">
+                <div class="caption">傻傻的合照 🤪</div>
+            </div>
+
+            <!-- 拍立得相片 4 -->
+            <div class="polaroid">
+                <!-- 請將下面 "" 內替換成你的真實照片網址 -->
+                <img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=500&q=80" alt="Memory 4">
+                <div class="caption">甜蜜的酒店小驚喜 🎈</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 動態愛心與羽毛生成 JavaScript -->
+    <script>
+        const container = document.getElementById('floatContainer');
+        const elements = ['❤️', '🎈', '✨', '🐾', '🪶']; // 包含了汪汪的腳印和鵪鶉的羽毛/星星
+
+        function createFloater() {
+            const floater = document.createElement('span');
+            floater.className = 'heart';
+            floater.innerText = elements[Math.floor(Math.random() * elements.length)];
+            
+            // 隨機大小、水平位置及動畫時間
+            const size = Math.random() * 15 + 15;
+            floater.style.fontSize = size + 'px';
+            floater.style.left = Math.random() * 100 + 'vw';
+            
+            const duration = Math.random() * 4 + 5; // 5s 到 9s 漂浮時間
+            floater.style.animationDuration = duration + 's';
+            
+            container.appendChild(floater);
+
+            // 動畫結束後自動刪除元素，防止網頁變慢
+            setTimeout(() => {
+                floater.remove();
+            }, duration * 1000);
+        }
+
+        // 每 800 毫秒產生一個漂浮物
+        setInterval(createFloater, 800);
+    </script>
+</body>
+</html>
