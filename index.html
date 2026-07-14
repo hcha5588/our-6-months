@@ -11,6 +11,7 @@
             --primary-color: #e8a598;
             --text-color: #5a4b41;
             --accent-color: #df9c8c;
+            --border-soft: rgba(223, 156, 140, 0.15);
         }
 
         body {
@@ -21,9 +22,39 @@
             color: var(--text-color);
             line-height: 1.8;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* 漂浮愛心與羽毛特效 */
+        /* 網頁左右兩側的溫馨植物插畫裝飾 */
+        body::before, body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            width: 180px;
+            height: 100vh;
+            background-repeat: no-repeat;
+            background-size: contain;
+            opacity: 0.18; /* 保持溫和柔美，不搶文字視線 */
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 左側插畫 */
+        body::before {
+            left: 0;
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/006/555/524/small/green-seamless-brush-border-with-leafes-branches-and-flowers-design-seamless-leaves-frame-for-wedding-invitations-greeting-cards-nature-organic-items-vector.jpg');
+            background-position: left center;
+            transform: scaleX(-1); /* 鏡像翻轉讓兩側對稱 */
+        }
+
+        /* 右側插畫 */
+        body::after {
+            right: 0;
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/006/555/524/small/green-seamless-brush-border-with-leafes-branches-and-flowers-design-seamless-leaves-frame-for-wedding-invitations-greeting-cards-nature-organic-items-vector.jpg');
+            background-position: right center;
+        }
+
+        /* 漂浮愛心、足跡與羽毛特效 */
         .floating-elements {
             position: fixed;
             top: 0;
@@ -31,13 +62,13 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 0;
+            z-index: 1;
         }
 
         .heart, .feather {
             position: absolute;
-            opacity: 0.6;
-            animation: float Up 6s ease-in infinite;
+            opacity: 0.5;
+            animation: floatUp 7s ease-in infinite;
         }
 
         @keyframes floatUp {
@@ -45,8 +76,8 @@
                 transform: translateY(105vh) rotate(0deg);
                 opacity: 0;
             }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.5; }
             100% {
                 transform: translateY(-5vh) rotate(360deg);
                 opacity: 0;
@@ -58,13 +89,18 @@
             margin: 0 auto;
             padding: 40px 20px;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
-        /* 頂部吉祥物 Banner */
+        /* 頂部區 */
         .header {
             text-align: center;
             margin-bottom: 40px;
+            background: rgba(255, 255, 255, 0.4);
+            padding: 20px;
+            border-radius: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         .mascots {
@@ -94,32 +130,29 @@
             font-weight: 600;
         }
 
+        /* 這裡已為您修改為中文化的「半週年」 */
         .days-counter {
             background-color: var(--primary-color);
             color: white;
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 20px;
             display: inline-block;
             font-size: 14px;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(232, 165, 152, 0.3);
+            box-shadow: 0 4px 12px rgba(232, 165, 152, 0.3);
+            letter-spacing: 1px;
         }
 
-        /* 情書卡片 */
+        /* 信件卡片 */
         .letter-card {
             background: var(--card-bg);
             border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(90, 75, 65, 0.05);
-            border: 1px solid rgba(223, 156, 140, 0.15);
+            padding: 35px;
+            box-shadow: 0 10px 35px rgba(90, 75, 65, 0.04);
+            border: 1px solid var(--border-soft);
             margin-bottom: 40px;
-            white-space: pre-wrap; /* 保留分行 */
+            white-space: pre-wrap;
             font-size: 15.5px;
-        }
-
-        .letter-card p {
-            margin-top: 0;
-            margin-bottom: 24px;
         }
 
         .signature {
@@ -130,12 +163,20 @@
             padding-top: 20px;
         }
 
-        /* 相簿區域 */
+        /* 相簿 */
         .gallery-title {
             text-align: center;
             margin-bottom: 25px;
             font-size: 18px;
             font-weight: bold;
+            background: rgba(255, 255, 255, 0.5);
+            display: inline-block;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+            width: fit-content;
+            padding: 6px 20px;
+            border-radius: 15px;
         }
 
         .polaroid-grid {
@@ -148,9 +189,10 @@
             background: white;
             padding: 12px 12px 24px 12px;
             border-radius: 8px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.05);
             transform: rotate(-2deg);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.02);
         }
 
         .polaroid:nth-child(even) {
@@ -158,8 +200,9 @@
         }
 
         .polaroid:hover {
-            transform: rotate(0deg) scale(1.05);
-            z-index: 2;
+            transform: rotate(0deg) scale(1.04);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+            z-index: 5;
         }
 
         .polaroid img {
@@ -167,31 +210,42 @@
             aspect-ratio: 1 / 1;
             object-fit: cover;
             border-radius: 4px;
-            background-color: #f0f0f0; /* 未載入時的灰色底 */
+            background-color: #f2ede9;
         }
 
         .caption {
             text-align: center;
             font-size: 13px;
-            margin-top: 10px;
+            margin-top: 12px;
             font-weight: 500;
             color: #7a6a5e;
         }
 
-        /* 手機版排版調整 */
+        /* 手機版排版調優 */
+        @media (max-width: 768px) {
+            /* 在窄螢幕上手機版隱藏側邊大裝飾，避免遮擋文字，改為更乾淨的版面 */
+            body::before, body::after {
+                display: none;
+            }
+        }
+
         @media (max-width: 480px) {
             .polaroid-grid {
                 grid-template-columns: 1fr;
+            }
+            .letter-card {
+                padding: 24px;
             }
         }
     </style>
 </head>
 <body>
 
+    <!-- 背景漂浮粒子 -->
     <div class="floating-elements" id="floatContainer"></div>
 
     <div class="container">
-        <!-- 頂部區 -->
+        <!-- 頂部 Header -->
         <div class="header">
             <div class="mascots">
                 <span>🐶</span>
@@ -199,10 +253,11 @@
                 <span>🐦</span>
             </div>
             <h1>汪汪 & 鵪鶉</h1>
-            <div class="days-counter">✨ 我們的 180 日紀念 ✨</div>
+            <!-- 這裡已修改為「半週年」 -->
+            <div class="days-counter">✨ 我們的半週年紀念 ✨</div>
         </div>
 
-        <!-- 你的信件 -->
+        <!-- 情書本體 -->
         <div class="letter-card">
 我哋一齊六個月啦! 汪汪同鵪鶉嘅愛喺呢啲日子,里程碑好值得回顧,我鍾意將多啲感受講出嚟 
 
@@ -227,69 +282,67 @@
             </div>
         </div>
 
-        <!-- 拍立得相簿 -->
-        <div class="gallery-title">📸 我們的回憶角落 (可自行放入相片)</div>
+        <!-- 相片牆 -->
+        <div class="gallery-title">📸 我們的回憶角落</div>
         <div class="polaroid-grid">
             
-            <!-- 拍立得相片 1 -->
+            <!-- 拍立得 1 -->
             <div class="polaroid">
-                <!-- 請將下面 "" 內替換成你的真實照片網址 -->
+                <!-- 請替換 src="" 內的網址為你的照片 -->
                 <img src="https://images.unsplash.com/photo-1516624683217-bf02fc6b6b7c?auto=format&fit=crop&w=500&q=80" alt="Memory 1">
                 <div class="caption">第一個里程碑 📍</div>
             </div>
 
-            <!-- 拍立得相片 2 -->
+            <!-- 拍立得 2 -->
             <div class="polaroid">
-                <!-- 請將下面 "" 內替換成你的真實照片網址 -->
+                <!-- 請替換 src="" 內的網址為你的照片 -->
                 <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?auto=format&fit=crop&w=500&q=80" alt="Memory 2">
                 <div class="caption">最愛的咖啡店 ☕</div>
             </div>
 
-            <!-- 拍立得相片 3 -->
+            <!-- 拍立得 3 -->
             <div class="polaroid">
-                <!-- 請將下面 "" 內替換成你的真實照片網址 -->
+                <!-- 請替換 src="" 內的網址為你的照片 -->
                 <img src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=500&q=80" alt="Memory 3">
                 <div class="caption">傻傻的合照 🤪</div>
             </div>
 
-            <!-- 拍立得相片 4 -->
+            <!-- 拍立得 4 -->
             <div class="polaroid">
-                <!-- 請將下面 "" 內替換成你的真實照片網址 -->
+                <!-- 請替換 src="" 內的網址為你的照片 -->
                 <img src="https://images.unsplash.com/photo-1490730141103-6cac27aaab94?auto=format&fit=crop&w=500&q=80" alt="Memory 4">
-                <div class="caption">甜蜜的酒店小驚喜 🎈</div>
+                <div class="caption">甜蜜的小驚喜 🎈</div>
             </div>
 
         </div>
     </div>
 
-    <!-- 動態愛心與羽毛生成 JavaScript -->
+    <!-- 動態背景 JS -->
     <script>
         const container = document.getElementById('floatContainer');
-        const elements = ['❤️', '🎈', '✨', '🐾', '🪶']; // 包含了汪汪的腳印和鵪鶉的羽毛/星星
+        const elements = ['❤️', '🎈', '✨', '🐾', '🪶'];
 
         function createFloater() {
             const floater = document.createElement('span');
             floater.className = 'heart';
             floater.innerText = elements[Math.floor(Math.random() * elements.length)];
             
-            // 隨機大小、水平位置及動畫時間
-            const size = Math.random() * 15 + 15;
+            const size = Math.random() * 12 + 15; // 15px - 27px
             floater.style.fontSize = size + 'px';
             floater.style.left = Math.random() * 100 + 'vw';
             
-            const duration = Math.random() * 4 + 5; // 5s 到 9s 漂浮時間
+            const duration = Math.random() * 5 + 6; // 6s - 11s 慢速漂浮，更優雅
             floater.style.animationDuration = duration + 's';
             
             container.appendChild(floater);
 
-            // 動畫結束後自動刪除元素，防止網頁變慢
             setTimeout(() => {
                 floater.remove();
             }, duration * 1000);
         }
 
-        // 每 800 毫秒產生一個漂浮物
-        setInterval(createFloater, 800);
+        // 每 900 毫秒生成一個，密度剛好不突兀
+        setInterval(createFloater, 900);
     </script>
 </body>
 </html>
